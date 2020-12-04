@@ -68,7 +68,6 @@ export class ProfileList extends Component<Props, State> {
         this.subscription && this.subscription.unsubscribe()
         this.props.navigation.removeListener('blur', this.onScreenBlur)
         this.props.navigation.removeListener('focus', this.onScreenFocus)
-        console.log('[ componentWillUnmount this.onScreenFocus ]', this.onScreenFocus)
     }
 
 
