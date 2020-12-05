@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { StackNavigationOptions } from '@react-navigation/stack'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -17,9 +16,10 @@ export const profileListScreenOptions: StackNavigationOptions = {
     headerTitleStyle: {
         fontSize: fonts.largeTextFont
     },
-    headerRight: (props) => <Ionicons name='menu-outline' color={ colors.lightPurple } size={ 35 } style={ { marginRight: 15 } } />
+    headerRight: (props) => <Ionicons name='menu-outline' color={ colors.lightPurple } size={ fonts.profileListHeaderRight } style={ { marginRight: 15 } } />
 
 }
+
 
 /**
  * react-navigation Stack.Screen options for @component ProfileDetails
@@ -29,6 +29,6 @@ export const profileDetailsScreenOptions: StackNavigationOptions = {
     headerBackTitleVisible: false,
     headerTintColor: colors.textGray,
     headerTitleAlign: 'left',
-    headerBackImage: ({ tintColor }) => <Fontisto name='arrow-left-l' color={ colors.lightPurple } size={ 40 } style={ { marginLeft: 10 } } />,
+    headerBackImage: ({ tintColor }) => <Fontisto name='arrow-left-l' color={ colors.lightPurple } size={ fonts.profileDetailsHeaderBack } style={ { marginLeft: 10 } } />,
 
 }
