@@ -133,13 +133,13 @@ export class ProfileList extends Component<Props, State> {
                 <Content>
                     <List>
                         {
-                            profiles.map((profile) =>
+                            profiles.map((profile, index) =>
                                 <ProfileItem
                                     age={ profile.age }
                                     firstName={ profile.name.first }
                                     image={ profile.avatar }
                                     onPress={ this.onPress.bind(this, profile) }
-                                    key={ profile.name.first + profile.name.last + profile.age }
+                                    key={ profile.name.first + profile.name.last + profile.age + index }
                                 />)
                         }
                     </List>

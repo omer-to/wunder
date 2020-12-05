@@ -21,6 +21,7 @@ export function App() {
   /**
    * Effect hook to hide the splash screen when the component,
    * and hence the whole component tree mounts.
+   * @inheritdoc 
    */
   React.useEffect(() => {
     RNBootSplash.hide({ fade: true })
