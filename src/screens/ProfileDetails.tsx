@@ -4,6 +4,7 @@ import { Grid, Col, Row, Thumbnail, H3, Text as NBText, ActionSheet, Toast } fro
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MapView, { Marker, Callout, Region } from 'react-native-maps'
 import Clipboard from '@react-native-community/clipboard'
+import { showLocation } from 'react-native-map-link'
 
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
@@ -60,8 +61,10 @@ export class ProfileDetails extends Component<Props, State> {
     }
 
     onCalloutPress(): void {
-        const { contact } = this.props.route.params
-        const options = Object.values(contact)
+        const { contact, coordinates } = this.props.route.params
+        const { email, cell } = contact
+        const options = [ email, cell ]
+
         const buttons: string[] = [ 'Copy email', 'Copy phone number', 'Get directions', 'Cancel' ]
         const toastTexts: string[] = [ 'Email copied to clipboard', 'Phone number copied to clipboard' ]
 
@@ -83,15 +86,16 @@ export class ProfileDetails extends Component<Props, State> {
                             textStyle: { textAlign: 'center' }
                         })
                         break;
-                    case 3:
-
+                    case 2:
+                        showLocation({
+                            ...coordinates,
+                            googleForceLatLon: true,  // optionally force GoogleMaps to use the latlon for the query instead of the title
+                            dialogMessage: 'Choose the app you like to use', // optional (default: 'What app would you like to use?')
+                        })
                         break;
                     default:
                         break;
                 }
-
-
-
             }
         )
     }
