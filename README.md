@@ -21,6 +21,8 @@ cd ios && npx pod install && cd ..
 
 ## Run on iOS
 
+[You need to have your iOS environment set up](https://reactnative.dev/docs/environment-setup)
+
 ### Simulator
 
 Run the project on simulator of your choice (e.g. iPhone 12 here)
@@ -43,6 +45,7 @@ npx react-native --device "your_iPhone_name"
 ```
 
 ## Run on Android
+[You need to have your Android environment set up](https://reactnative.dev/docs/environment-setup)
 
 ```bash
 npx react-native run-android
