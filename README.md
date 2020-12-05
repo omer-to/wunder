@@ -13,15 +13,17 @@ cd wunder
 npm install
 ```
 
-## Install Pods
 
-```bash
-cd ios && npx pod install && cd ..
-```
 
 ## Run on iOS
 
 [You need to have your iOS environment set up](https://reactnative.dev/docs/environment-setup)
+
+### Install Pods
+
+```bash
+cd ios && pod install && cd ..
+```
 
 ### Simulator
 
