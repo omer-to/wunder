@@ -70,6 +70,11 @@ export interface IProfile {
     },
     coordinates: Coordinates,
     gender: string,
+    contact: {
+        email: string,
+        phone: string,
+        cell: string,
+    }
 }
 
 export interface Coordinates {
@@ -95,3 +100,4 @@ export interface IData {
     results: IUser[],
     info: IInfo
 }
+
