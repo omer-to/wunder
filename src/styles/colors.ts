@@ -5,7 +5,8 @@ export const colors = {
     textGray: '#DDDDDD',
     sectionGray: '#b1b8c5',
     background: 'white',
-    borderGray: '#dbe0e5'
+    borderGray: '#dbe0e5',
+    white: 'white'
 }
 
 
