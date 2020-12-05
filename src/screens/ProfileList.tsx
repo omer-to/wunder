@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Content, List } from 'native-base'
+import { interval, Subscription } from 'rxjs'
+import { startWith, takeWhile } from 'rxjs/operators'
 
 import type { GestureResponderEvent } from 'react-native'
 import type { RouteProp } from '@react-navigation/native'
@@ -11,19 +13,29 @@ import { randomUserGenerator } from '../api'
 import { IProfile } from '../models'
 
 
+/**
+ * @type ProfileScreenNavigationProp navigation prop that the Profile Details will reiceve as a Stack Screen
+ */
 type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ProfileList'>
+
+
+/**
+ * @type ProfileScreenRouteProp route prop that the Profile Details will reiceve as a Stack Screen
+ */
 type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'ProfileList'>
+
 
 interface Props {
     navigation: ProfileScreenNavigationProp
     route: ProfileScreenRouteProp
 }
+
+
 interface State {
     profiles: IProfile[]
 }
 
-import { interval, Subscription, pipe, timer } from 'rxjs'
-import { startWith, takeUntil, takeWhile } from 'rxjs/operators'
+
 
 /**
  * React Component for rendering Profiles in a scrollview.
