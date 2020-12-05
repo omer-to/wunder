@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
-import { Grid, Col, Row, Thumbnail } from 'native-base'
+import { Grid, Col, Row, Thumbnail, H3, Text as NBText } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Marker, Callout, Region } from 'react-native-maps'
 
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
 import type { RootStackParamList } from '../App'
 
 import { colors, fonts, margins } from '../styles'
+import { CustomCallOut } from '../components'
+
+
+
 
 
 /**
@@ -31,12 +35,28 @@ interface Props {
 
 interface State { }
 
+
 /**
  * React Component for getting rendering Profile Details of a specific person
  *
  * @extends Component
  */
 export class ProfileDetails extends Component<Props, State> {
+    mapview!: MapView | null
+
+    /**
+     * Called when the @component { MapView } is laid out,
+     * used to animate to a region.
+     */
+    onLayout(): void {
+        const { coordinates } = this.props.route.params
+        const region: Region = {
+            ...coordinates,
+            latitudeDelta: 0.35,
+            longitudeDelta: 0.35
+        }
+        this.mapview?.animateToRegion(region, 2000)
+    }
 
 
     /**
@@ -46,7 +66,7 @@ export class ProfileDetails extends Component<Props, State> {
      *
      */
     render() {
-        const { age, avatar, coordinates, gender, name } = this.props.route.params
+        const { age, avatar, coordinates, gender, name, contact } = this.props.route.params
         const fullName = name.first + ' ' + name.last
         const iconName = gender === 'male' ? 'male-outline' : 'female-outline'
 
@@ -66,8 +86,20 @@ export class ProfileDetails extends Component<Props, State> {
                 </Row>
 
                 <Row style={ { ...styles.gridMiddle } } size={ 0.38 } >
-                    <MapView initialRegion={ { ...coordinates, latitudeDelta: 0.1922, longitudeDelta: 0.1822, } } style={ { ...styles.map } }>
-                        <Marker coordinate={ coordinates } pinColor={ colors.darkPurple } />
+                    <MapView initialRegion={ { ...coordinates, latitudeDelta: 0.00, longitudeDelta: 0.00 } }
+                        onLayout={ this.onLayout.bind(this) }
+                        style={ { ...styles.map } } ref={ mapview => this.mapview = mapview }>
+                        <Marker coordinate={ coordinates } pinColor={ colors.darkPurple }>
+                            <Callout tooltip>
+                                <CustomCallOut>
+                                    <View>
+                                        <H3 style={ { color: colors.white, textDecorationStyle: 'solid', textDecorationLine: 'underline' } } >Contact Info</H3>
+                                        <NBText style={ { ...styles.emailText } }>{ contact.email }</NBText>
+                                        <NBText style={ { ...styles.cellText } }>{ contact.cell }</NBText>
+                                    </View>
+                                </CustomCallOut>
+                            </Callout>
+                        </Marker>
                     </MapView>
                 </Row>
 
@@ -145,14 +177,9 @@ const styles = StyleSheet.create({
         marginLeft: 'auto',
         right: 40,
         paddingBottom: 5
-
     },
     icon: {
-        // marginLeft: 'auto', marginRight: 'auto', alignSelf: 'center', justifyContent: 'center'
-        // borderColor: 'red', borderWidth: 1,
-        // flex: 1,alignSelf: 'center'
         marginTop: 'auto', marginBottom: 'auto', alignSelf: 'center'
-
     },
     fullNameText: {
         fontSize: fonts.regularTextFont,
@@ -170,5 +197,12 @@ const styles = StyleSheet.create({
         backgroundColor: colors.darkPurple,
         position: 'absolute',
         top: 0
+    },
+    emailText: {
+        color: colors.white,
+        paddingVertical: 7
+    },
+    cellText: {
+        color: colors.white
     }
 })
