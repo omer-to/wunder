@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
-import { Grid, Col, Row, Thumbnail, H3, Text as NBText } from 'native-base'
+import { Grid, Col, Row, Thumbnail, H3, Text as NBText, ActionSheet, Toast } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MapView, { Marker, Callout, Region } from 'react-native-maps'
+import Clipboard from '@react-native-community/clipboard'
 
 import type { RouteProp } from '@react-navigation/native'
 import type { StackNavigationProp } from '@react-navigation/stack'
@@ -58,6 +59,42 @@ export class ProfileDetails extends Component<Props, State> {
         this.mapview?.animateToRegion(region, 2000)
     }
 
+    onCalloutPress(): void {
+        const { contact } = this.props.route.params
+        const options = Object.values(contact)
+        const buttons: string[] = [ 'Copy email', 'Copy phone number', 'Get directions', 'Cancel' ]
+        const toastTexts: string[] = [ 'Email copied to clipboard', 'Phone number copied to clipboard' ]
+
+        ActionSheet.show(
+            {
+                options: buttons,
+                cancelButtonIndex: buttons.length - 1,
+                title: "Get in touch"
+            },
+            buttonIndex => {
+                switch (buttonIndex) {
+                    case 0:
+                    case 1:
+                        Clipboard.setString(options[ buttonIndex ])
+                        Toast.show({
+                            text: toastTexts[ buttonIndex ],
+                            position: "top",
+                            duration: 2000,
+                            textStyle: { textAlign: 'center' }
+                        })
+                        break;
+                    case 3:
+
+                        break;
+                    default:
+                        break;
+                }
+
+
+
+            }
+        )
+    }
 
     /**
      * Implements React's {@link Component#render()}.
@@ -90,7 +127,7 @@ export class ProfileDetails extends Component<Props, State> {
                         onLayout={ this.onLayout.bind(this) }
                         style={ { ...styles.map } } ref={ mapview => this.mapview = mapview }>
                         <Marker coordinate={ coordinates } pinColor={ colors.darkPurple }>
-                            <Callout tooltip>
+                            <Callout tooltip onPress={ this.onCalloutPress.bind(this) } >
                                 <CustomCallOut>
                                     <View>
                                         <H3 style={ { color: colors.white, textDecorationStyle: 'solid', textDecorationLine: 'underline' } } >Contact Info</H3>
