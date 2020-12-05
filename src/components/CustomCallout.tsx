@@ -5,12 +5,14 @@ import type { ViewStyle } from 'react-native'
 
 import { colors } from '../styles'
 
+
 interface Props {
     style?: ViewStyle
 }
 
+
 /**
- * CallOuts that display when the user presses on a marker on the map.
+ * Map callout that displays when the user presses on a marker on the map.
  */
 export class CustomCallOut extends Component<Props> {
     render() {
@@ -41,7 +43,8 @@ const styles = StyleSheet.create({
     bubble: {
         flexDirection: 'row',
         backgroundColor: colors.darkPurple,
-        padding: 20,
+        paddingVertical: 20,
+        paddingHorizontal: 30,
         borderRadius: 10,
         top: bubleTop,
         borderColor: 'transparent',
